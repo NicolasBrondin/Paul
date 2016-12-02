@@ -144,7 +144,7 @@ function launchGame() //Called when the button 'Play the game' is pressed
 				    			keyPressed = true;
 				    			player.setAnimation('runLeft');
 				    		}
-				    		player.setX(player.getX()-10);
+				    		player.move(-10,0);
 			    		}
 		    		},10);
 		    	}
@@ -163,7 +163,7 @@ function launchGame() //Called when the button 'Play the game' is pressed
 					    		keyPressed = true;
 						    	player.setAnimation('runRight');
 					    	}
-					    	player.setX(player.getX()+10);
+					    	player.move(10,0);
 				    	}
 		    		},10);
 		    	}
