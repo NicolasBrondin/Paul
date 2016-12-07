@@ -40,19 +40,62 @@ var Game = function() {
     this.initialize = function(){
         $('#container').hide();
 
-        // Sound initialize
+        // Sound init
         this.music_playing = localStorage.music_playing == "false" ? false : true;
         if(this.music_playing == false) {
             $('#speaker').html('<img src="media/sound-off.svg" />');
         }
         this.song.volume = 0.2 *this.music_playing;
         this.song.play();
+        
+        // Keyboard init
+        document.addEventListener('keydown', this.press_enter_key.bind(this));
+    };
+    
+    this.press_enter_key = function(event){
+        if(event.keyCode == 13) {
+            this.restart_game();
+        }
+    };
+    
+    this.detect_screen_collision = function(){
+        return (this.player_orientation == 'left' && this.player.getX()>0 ) && (this.player_orientation == 'right' && this.player.getX()<$( window ).width()-100 );
+    };
+    
+    this.player_run = function(direction){
+        this.player_orientation = direction;
+        if(this.timerKey==null) {
+            this.timerKey = setInterval(function() {
+                console.log(this.detect_screen_collision())
+                if( !this.detect_screen_collision() ) {
+                    if(this.player.getAnimation()!= ('run_'+direction)) {
+                        this.player.setAnimation('run_'+direction);
+                        this.keyPressed = true;
+                    }
+                    var x = direction == 'left' ? -10 : 10;
+                    this.player.move(x,0);
+                }
+            }.bind(this),10);
+        }
+    };
+    
+    this.press_arrow_keys = function(event) {
+        if(event.keyCode == 37) {
+            this.player_run('left');
+        } else if(event.keyCode == 39) {
+            this.player_run('right');
+        }
     };
     
      this.update = function(){
     };
     
-    this.endGame = function() //Called when the player is dead
+    this.restart_game = function() {
+        this.end_game();
+        this.start_game();
+    };
+    
+    this.end_game = function() //Called when the player is dead
     {
         //Delete all game components
         $('#container').hide();
@@ -76,7 +119,7 @@ var Game = function() {
                     if(this.drops[i].getX()+25>=this.player.getX()&&this.drops[i].getX()+25<=this.player.getX()+75&&this.drops[i].getAnimation()!='crash')
                     {
                         //Back to menu
-                        this.endGame();
+                        this.end_game();
                     }
                 }
             }
@@ -107,7 +150,7 @@ var Game = function() {
     };
 
     
-    this.launchGame = function() {
+    this.start_game = function() {
         //Add the container of the Kinetic Stage
         $('#container').show();
         //Remove the menu
@@ -127,24 +170,42 @@ var Game = function() {
         //Create the animations for the player
         this.animations.player = 
         {
-        idleRight: [{x: 0, y: 0, width: 100, height: 125}],
-
-        idleLeft: [{x: 100, y: 0, width: 100, height: 125}],
-
-        runRight: [{x: 0, y: 125, width: 100, height: 125},{x: 100, y: 130, width: 100, height: 125},{x: 200, y: 130, width: 100, height: 125},{x: 300, y: 130, width: 100, height: 125},
-        {x: 400, y: 130, width: 100, height: 125},{x: 500, y: 130, width: 100, height: 125},{x: 600, y: 130, width: 100, height: 125},{x: 700, y: 130, width: 100, height: 125}],
-
-        runLeft: [{x: 0, y: 250, width: 100, height: 125},{x: 100, y: 250, width: 100, height: 125},{x: 200, y: 250, width: 100, height: 125},{x: 300, y: 250, width: 100, height: 125},
-        {x: 400, y: 250, width: 100, height: 125},{x: 500, y: 250, width: 100, height: 125},{x: 600, y: 250, width: 100, height: 125},{x: 700, y: 250, width: 100, height: 125}]
+            "idle_right": [
+                {x: 0, y: 0, width: 100, height: 125}
+            ],
+            "idle_left": [
+                {x: 100, y: 0, width: 100, height: 125}
+            ],
+            "run_right": [
+                {x: 0, y: 125, width: 100, height: 125},
+                {x: 100, y: 130, width: 100, height: 125},
+                {x: 200, y: 130, width: 100, height: 125},
+                {x: 300, y: 130, width: 100, height: 125},
+                {x: 400, y: 130, width: 100, height: 125},
+                {x: 500, y: 130, width: 100, height: 125},
+                {x: 600, y: 130, width: 100, height: 125},
+                {x: 700, y: 130, width: 100, height: 125}
+            ],
+            "run_left": [
+                {x: 0, y: 250, width: 100, height: 125},
+                {x: 100, y: 250, width: 100, height: 125},
+                {x: 200, y: 250, width: 100, height: 125},
+                {x: 300, y: 250, width: 100, height: 125},
+                {x: 400, y: 250, width: 100, height: 125},
+                {x: 500, y: 250, width: 100, height: 125},
+                {x: 600, y: 250, width: 100, height: 125},
+                {x: 700, y: 250, width: 100, height: 125}
+            ]
         };
         //Create the aniamtions for the raindrops
-        this.animations.raindrop = 
-        {
-            idle: [{x:0,y:0,width:50,height:50}], crash: [{x:50,y:0,width:50,height:50}]
+        this.animations.raindrop = {
+            idle: [
+                {x:0,y:0,width:50,height:50}
+            ], 
+            crash: [
+                {x:50,y:0,width:50,height:50}
+            ]
         };
-
-        
-
         
         this.sprites.raindrop.onload = function()
         {
@@ -155,55 +216,13 @@ var Game = function() {
 
         this.sprites.player.onload = function() 
         {
-            this.player = new Kinetic.Sprite({ x: 600, y: $( window ).height()-130, image: this.sprites.player, animation: 'idleRight', animations: this.animations.player, frameRate: 8, index: 0});
+            this.player = new Kinetic.Sprite({ x: 600, y: $( window ).height()-130, image: this.sprites.player, animation: 'idle_right', animations: this.animations.player, frameRate: 8, index: 0});
             this.player_orientation = 'right';
             this.layers.player.add(this.player);
             this.stage.add(this.layers.player);
             this.player.start();
             this.timerKey =null;
-            document.addEventListener('keydown', function(event) 
-            {
-                if(event.keyCode == 37) 
-                {
-                    this.player_orientation = 'left';
-                    if(this.timerKey==null)
-                    {
-                        this.timerKey = setInterval(function()
-                        {
-                            if(this.player.getX()>0)
-                            {
-                                if(this.player.getAnimation()!='runLeft')
-                                {
-                                    this.keyPressed = true;
-                                    this.player.setAnimation('runLeft');
-                                }
-                                this.player.move(-10,0);
-                            }
-                        }.bind(this),10);
-                    }
-                }
-                else if(event.keyCode == 39) 
-                {
-                    this.player_orientation = 'right';
-                    if(this.timerKey==null)
-                    {
-                        this.timerKey = setInterval(function()
-                        {
-                            if(this.player.getX()<$( window ).width()-100)
-                            {
-                                if(this.player.getAnimation()!='runRight')
-                                {
-                                    this.keyPressed = true;
-                                    this.player.setAnimation('runRight');
-                                }
-                                this.player.move(10,0);
-                            }
-                        }.bind(this),10);
-                    }
-                }else if(event.keyCode == 13) {
-                    this.launchGame();
-                }
-            }.bind(this));
+            document.addEventListener('keydown', this.press_arrow_keys.bind(this));
             document.addEventListener('keyup',function(event)
             {
                 if(event.keyCode==37||event.keyCode==39)
@@ -211,8 +230,8 @@ var Game = function() {
                     clearTimeout(this.timerKey);
                     this.timerKey=null;
                     if(this.player_orientation=='left')
-                    { this.player.setAnimation('idleLeft');}
-                    else {this.player.setAnimation('idleRight');}
+                    { this.player.setAnimation('idle_left');}
+                    else {this.player.setAnimation('idle_right');}
                 }
             }.bind(this));
         }.bind(this);
