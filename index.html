@@ -6,7 +6,7 @@
 		<title>Paul</title>
 	</head>
 	<body>
-		<audio loop="loop" autoplay="autoplay" id="song">
+		<audio loop="loop" id="song">
   			<source src="media/music.mp3" type="audio/mpeg">
 		</audio>
 		<div id="menu">
@@ -15,7 +15,7 @@
             <p>Or press "Enter"</p>
 		</div>
 		<h2 id="score"></h2>
-		<a id="speaker" onclick="g.speakerOff()" href="javascript:void(0);"><img  src="media/sound-on.svg" /></a>
+		<a id="speaker" onclick="g.toggle_music()" href="javascript:void(0);"><img  src="media/sound-on.svg" /></a>
 		<script src="scripts/jquery.js"></script>
 		<script src="scripts/kinetic.js"></script>
 		<script src="scripts/game.js"></script>

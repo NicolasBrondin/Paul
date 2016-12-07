@@ -5,6 +5,7 @@ var Game = function() {
     this.timerFall;
     this.timerKey;
     this.song = $('#song')[0];
+    this.music_playing;
     this.drops;
     this.score;
     this.stage;
@@ -24,25 +25,31 @@ var Game = function() {
         player: null
     };
     
-    this.speakerOff = function() {
-        this.song.pause();
-        $('#speaker').remove();
-        $('body').append('<a id="speaker" onclick="g.speakerOn()" href="javascript:void(0);"><img  src="media/sound-off.svg" /></a>');
+    this.toggle_music = function() {
+        this.music_playing = !this.music_playing;
+        if(this.music_playing) {
+            $('#speaker').html('<img src="media/sound-on.svg" />');
+        } else {
+            $('#speaker').html('<img src="media/sound-off.svg" />');
+        }
+        this.song.volume = 0.2 * this.music_playing;
+        localStorage.setItem("music_playing", this.music_playing);
     };
     
-    this.speakerOn = function(){
-        this.song.play();
-        //Remove the old button 'play' and add the new one 'pause'
-        $('#speaker').remove();
-        $('body').append('<a id="speaker" onclick="g.speakerOff()" href="javascript:void(0);"><img  src="media/sound-on.svg" /></a>');
-    };
-    
-    this.update = function(){
-    };
-    
+   
     this.initialize = function(){
         $('#container').hide();
-        this.song.volume = 0.7;
+
+        // Sound initialize
+        this.music_playing = localStorage.music_playing == "false" ? false : true;
+        if(this.music_playing == false) {
+            $('#speaker').html('<img src="media/sound-off.svg" />');
+        }
+        this.song.volume = 0.2 *this.music_playing;
+        this.song.play();
+    };
+    
+     this.update = function(){
     };
     
     this.endGame = function() //Called when the player is dead
