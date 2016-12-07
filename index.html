@@ -1,37 +1,31 @@
-<!doctype html >
+<!doctype html>
 <html>
 	<head>
+        <meta charset="utf-8"/>
 		<link href="style.css" rel="stylesheet" type="text/css">
-		<title>Raindrop - The Creator</title>
+		<title>Paul</title>
 	</head>
 	<body>
 		<audio loop="loop" autoplay="autoplay" id="song">
   			<source src="media/music.mp3" type="audio/mpeg">
 		</audio>
 		<div id="menu">
-			<table>
-				<tr>
-					<td>
-						<h1>Raindrop</h1>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<button onClick="launchGame()">Play Now!</button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<a id="link" href="http://www.thecreator.fr">Visit my website!</a>
-					</td>
-				</tr>
-			</table>
+            <h1>Paul</h1>
+            <button onClick="g.launchGame()">Play Now!</button>
+            <p>Or press "Enter"</p>
 		</div>
 		<h2 id="score"></h2>
-		<a id="speaker" onclick="speakerOff()" href="javascript:void(0);"><img  src="media/speakerOn.png" /></a>
+		<a id="speaker" onclick="g.speakerOff()" href="javascript:void(0);"><img  src="media/sound-on.svg" /></a>
 		<script src="scripts/jquery.js"></script>
 		<script src="scripts/kinetic.js"></script>
-		<script src="scripts/game.js" defer="defer"></script>
+		<script src="scripts/game.js"></script>
+        <script type="text/javascript">
+            var g;
+            $(document).ready(function() {
+                g = new Game();
+                g.initialize();
+            });
+        </script>
 		<div id="container"></div>
 	</body>
 </html>

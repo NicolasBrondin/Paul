@@ -1,12 +1,14 @@
-body 
+html, body 
 {
 	margin: 0px;
 	padding: 0px;
-	width:100%;
-	height:100%;
+	width:100vw;
+	height:100vh;
 	overflow:hidden;
-	background: url('media/background.jpg');
-	background-repeat: repeat-x; 
+	background: url('media/background.jpg') #91eafa;
+    background-position: bottom right ;
+	background-repeat: no-repeat; 
+    background-size: 100% auto; 
 }
 
 @font-face
@@ -15,20 +17,25 @@ body
 	src: url(font/raindrop.ttf);
 }
 
+@keyframes epileptic {
+    0% {background-color: rgba(46, 204, 113,0.4);}
+    25% {background-color:rgba(211, 84, 0,0.4);}
+    50% {background-color: rgba(192, 57, 43,0.4);}
+    75% {background-color: rgba(44, 62, 80,0.4);}
+    100% {background-color: rgba(241, 196, 15,0.4);}
+}
+
 #menu
 {
-	
+	text-align: center;
 	position:absolute;
 	width: 100%;
 	height: 100%;
 	z-index:1;
-}
-
-#menu table
-{
-	width:100%;
-	height:100%;
-	text-align: center;
+    
+    animation-name: epileptic;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
 }
 
 #menu h1
@@ -45,12 +52,19 @@ body
 	width: 300px;
 	height:50px;
 	text-align: center;
-	background: orange;
+	background: #f39c12;
 	border:none;
-	border-radius:5px;
+    border-right: 5px solid #e67e22;
+    border-bottom: 5px solid #e67e22;
+	border-radius:0;
 	color: white;
 	font-size:20px;
 	font-family: 'Arial';
+    cursor: pointer;
+}
+
+#menu button:hover{
+    background: #e67e22;
 }
 
 #menu a
@@ -63,14 +77,21 @@ body
 	text-decoration: none;
 }
 
+#menu p{
+    font-family: Arial;
+    color: white;
+}
+
 #container 
 {
 	position: absolute;
 	z-index:0;
 	position:absolute;
 	width: 100%;
-	height: 100%;
-	background: url('media/background.jpg');
+	height: 100%;    
+    animation-name: epileptic;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
 }
 
 #score
