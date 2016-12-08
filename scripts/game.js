@@ -94,6 +94,8 @@ var Game = function() {
     
    
     this.initialize = function(){
+        $('#loading').hide();
+        $('#menu').show();
         $('#container').hide();
         // Sound init
         this.music_playing = localStorage.music_playing == "false" ? false : true;

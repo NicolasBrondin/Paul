@@ -9,21 +9,36 @@
 		<audio loop="loop" id="song">
   			<source src="media/music.mp3" type="audio/mpeg">
 		</audio>
+        <div id="loading">
+            <h1>Loading...</h1>
+            <p>Please wait</p>
+        </div>
 		<div id="menu">
             <h1>Paul</h1>
             <button onClick="g.load_game()">Play Now!</button>
             <p>Or press "Enter"</p>
+            <div>
+                <img style="vertical-align:middle;" src="media/bad.png"/><span> Bad</span><img style="vertical-align:middle;" src="media/good.png"/><span> Good</span>
+            </div>
+            
+            <p>500 points => +1 Level</p>
 		</div>
 		<h2 id="score"></h2>
 		<a id="speaker" onclick="g.toggle_music()" href="javascript:void(0);"><img src="media/sound-on.svg"/></a>
 		<script src="scripts/jquery.js"></script>
+		<script src="bower_components/jquery.html5loader/src/jquery.html5Loader.min.js"></script>
 		<script src="scripts/kinetic.js"></script>
 		<script src="scripts/game.js"></script>
         <script type="text/javascript">
             var g;
             $(document).ready(function() {
-                g = new Game();
-                g.initialize();
+                $.html5Loader({
+                    filesToLoad: 'files.json',
+                    onComplete: function () {
+                        g = new Game();
+                        g.initialize();
+                    }
+                });
             });
         </script>
 		<div id="container"></div>
