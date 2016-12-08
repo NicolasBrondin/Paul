@@ -19,9 +19,13 @@ html, body
 
 @keyframes epileptic {
     0% {background-color: rgba(46, 204, 113,0.4);}
+    12% {background-color: rgba(64, 100, 12,0.4);}
     25% {background-color:rgba(211, 84, 0,0.4);}
+    37% {background-color:rgba(100, 100, 100,0.4);}
     50% {background-color: rgba(192, 57, 43,0.4);}
+    66% {background-color: rgba(10, 200, 100,0.4);}
     75% {background-color: rgba(44, 62, 80,0.4);}
+    87% {background-color: rgba(211, 84, 0,0.4);}
     100% {background-color: rgba(241, 196, 15,0.4);}
 }
 
@@ -34,7 +38,7 @@ html, body
 	z-index:1;
     
     animation-name: epileptic;
-    animation-duration: 1s;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
 }
 
@@ -46,6 +50,7 @@ html, body
 	font-size:100px;
 	color: white;
 }
+
 
 #menu button
 {
@@ -90,7 +95,7 @@ html, body
 	width: 100%;
 	height: 100%;    
     animation-name: epileptic;
-    animation-duration: 0.5s;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
 }
 
@@ -114,4 +119,31 @@ html, body
 	font-family: 'Arial';
 	font-size:30px;
 	color: white;
+}
+
+@media (orientation: portrait){
+    #menu h1
+    {
+        text-align: center;
+        margin-top:200px;
+        font-family: 'Raindrop';
+        font-size:50px;
+        color: white;
+    }
+    #menu button
+    {
+        width: 80%;
+        height:50px;
+        text-align: center;
+        background: #f39c12;
+        border:none;
+        border-right: 5px solid #e67e22;
+        border-bottom: 5px solid #e67e22;
+        border-radius:0;
+        color: white;
+        font-size:20px;
+        font-family: 'Arial';
+        cursor: pointer;
+    }
+    
 }
