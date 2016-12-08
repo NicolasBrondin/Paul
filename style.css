@@ -63,7 +63,7 @@ html, body
     border-bottom: 5px solid #e67e22;
 	border-radius:0;
 	color: white;
-	font-size:20px;
+	font-size:24px;
 	font-family: 'Arial';
     cursor: pointer;
 }
@@ -75,6 +75,13 @@ html, body
 #loading p, #menu p{
     font-family: Arial;
     color: white;
+    font-size:18px;
+}
+
+#menu span{
+    font-family: Arial;
+    color: white;
+    font-size:24px;
 }
 
 #container 

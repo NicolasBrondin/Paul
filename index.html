@@ -15,13 +15,14 @@
         </div>
 		<div id="menu">
             <h1>Paul</h1>
-            <button onClick="g.load_game()">Play Now!</button>
+            <button onClick="g.load_game()">Play!!!!</button>
             <p>Or press "Enter"</p>
+            <br>
             <div>
                 <img style="vertical-align:middle;" src="media/bad.png"/><span> Bad</span><img style="vertical-align:middle;" src="media/good.png"/><span> Good</span>
             </div>
             
-            <p>500 points => +1 Level</p>
+            <p>500 points &#8594; +1 Level</p>
 		</div>
 		<h2 id="score"></h2>
 		<a id="speaker" onclick="g.toggle_music()" href="javascript:void(0);"><img src="media/sound-on.svg"/></a>
@@ -32,6 +33,7 @@
         <script type="text/javascript">
             var g;
             $(document).ready(function() {
+                $('#menu').hide();
                 $.html5Loader({
                     filesToLoad: 'files.json',
                     onComplete: function () {
